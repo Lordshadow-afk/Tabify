@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!--
+    Content Security Policy. GitHub Pages cannot send headers, so the policy is set here.
+    It must stay the first thing after the charset so it applies to everything below it.
+      script-src 'self'      only our own files run; no inline scripts, no eval
+      style-src 'self'       only our own stylesheets; no <style> blocks, no style="" attributes
+      img-src                our files, any https image (the person's own GIF address), blob: (their uploads)
+                             and data: (images inside an imported theme; the checks in sanitize.js allow only
+                             base64 png, jpeg, gif, webp and avif, never SVG)
+      connect-src 'none'     the page can never send data anywhere (no fetch, XHR or WebSocket)
+      form-action 'none'     no form can post anywhere
+      base-uri 'none'        nobody can redirect relative addresses with a <base> tag
+      everything else none   no fonts, media, frames, workers or plugins
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https: blob: data:; connect-src 'none'; font-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New Tab</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/avatars.css" />
+  <link rel="stylesheet" href="css/layouts.css" />
+  <link rel="stylesheet" href="css/settings.css" />
+</head>
+<body>
+  <div class="sp" id="sp">
+    <div class="sp__bg" id="sp-bg"><div class="gif"></div><div class="img" id="sp-bg-img"></div></div>
+    <div class="embers" aria-hidden="true"></div>
+    <div class="sp__page">
+      <div class="art" id="sp-art"></div>
+      <header>
+        <div class="clock" id="sp-clock"></div>
+        <div class="greeting" id="sp-greeting"></div>
+      </header>
+      <form class="search" id="sp-search" autocomplete="off">
+        <button type="button" class="search__engine" id="sp-engine" aria-haspopup="listbox" aria-expanded="false" aria-controls="sp-engmenu" title="Change search engine">google</button>
+        <div class="engine-menu" id="sp-engmenu" role="listbox" aria-label="Search engine" hidden></div>
+        <input id="sp-q" type="text" placeholder="Search or type a URL…" aria-label="Search" spellcheck="false" />
+      </form>
+      <section class="groups" id="sp-groups"></section>
+    </div>
+    <div class="sp-toast" id="sp-toast" role="status" aria-live="polite"></div>
+    <button class="sp-fab" id="sp-fab" type="button" aria-expanded="false" aria-controls="sp-panel"><span aria-hidden="true">⚙</span> Customize</button>
+    <aside class="sp-panel" id="sp-panel" aria-hidden="true" aria-label="Customize page">
+          <div class="sp-phead">
+            <button class="sp-back" id="sp-close" type="button">← Back to page</button>
+            <strong>Customize</strong>
+          </div>
+          <div class="sp-tabs" role="tablist">
+            <button type="button" role="tab" data-ptab="theme" aria-selected="true">Theme</button>
+            <button type="button" role="tab" data-ptab="media" aria-selected="false">Art &amp; BG</button>
+            <button type="button" role="tab" data-ptab="links" aria-selected="false">Links</button>
+            <button type="button" role="tab" data-ptab="general" aria-selected="false">General</button>
+          </div>
+
+          <div class="ptab active" data-ptab="theme">
+            <section>
+              <h2>Theme</h2>
+              <select id="c-theme" aria-label="Theme"></select>
+            </section>
+            <section>
+              <h2>Layout</h2>
+              <div class="seg" id="c-layout"></div>
+            </section>
+            <section>
+              <h2>Colors</h2>
+              <div class="colors" id="c-colors"></div>
+            </section>
+            <section>
+              <h2>Style</h2>
+              <label class="ctl">Corner radius <b id="v-rad">16px</b>
+                <input id="r-rad" type="range" min="0" max="28" value="16" /></label>
+            </section>
+            <section>
+              <h2>Search box text</h2>
+              <input id="r-ph" type="text" maxlength="80" placeholder="Search or type a URL…" spellcheck="false" aria-label="Search box text" />
+              <p class="note">Shown in the search box before you type. Leave it empty to use the default. Each theme can have its own.</p>
+            </section>
+            <section>
+              <h2>Box style</h2>
+              <div class="seg" id="c-skin"></div>
+              <p class="note">Retro RPG: thick white frames and a heart that points at the link you hover. Classical Greek: double gold frames, a Greek-key border and drifting embers. Manga ink: heavy borders with hard red shadows, halftone dots and focus lines. Halftone poster: a navy ground, cream panels, heavy type and printed-dot art.</p>
+            </section>
+            <section>
+              <h2>Effects</h2>
+              <label class="chk"><input id="fx-crt" type="checkbox" /> CRT screen flicker</label>
+              <p class="note">Scanlines, a slow rolling band and a gentle low-contrast flicker. It never flashes brightly and switches off if your system asks for reduced motion.</p>
+            </section>
+            <section>
+              <h2>Your themes</h2>
+              <div class="row2">
+                <button class="reset" id="t-copy" type="button">Copy this theme as JSON</button>
+                <button class="reset" id="t-delete" type="button" hidden>Delete this theme</button>
+              </div>
+              <label class="fieldgap"><span class="note">Paste a theme to add it</span>
+                <textarea id="t-import" rows="5" spellcheck="false" aria-label="Theme JSON"></textarea></label>
+              <div class="row2"><button class="filebtn" id="t-add" type="button">Add theme</button></div>
+              <p class="links-status" id="t-status" role="status"></p>
+              <p class="note">Themes are plain JSON. Colors must be #rrggbb, images must be https addresses, and your uploaded images never travel inside one.</p>
+            </section>
+            <button class="reset" id="reset" type="button">Reset to theme</button>
+          </div>
+
+          <div class="ptab" data-ptab="links">
+            <p class="note">Each block is one card. The first line is the card name. Every line after it is a link:<br>
+              <code>Label | address | key</code><br>
+              The <code>key</code> is optional. Press it on the page to open that link. Leave a blank line between cards.</p>
+            <textarea id="links-text" rows="15" spellcheck="false" aria-label="Cards and links"></textarea>
+            <p class="links-status" id="links-status" role="status"></p>
+            <div class="row2">
+              <button class="reset" id="links-add" type="button">+ Add card</button>
+              <button class="reset" id="links-reset" type="button">Reset links</button>
+            </div>
+          </div>
+
+          <div class="ptab" data-ptab="general">
+            <section class="keep">
+              <h2>Keep my settings safe</h2>
+              <p class="note">Clearing cookies and site data in Firefox or Chrome wipes anything a web page saves. Your settings live in two more places that survive it. Use the first one and you never have to think about this again.</p>
+              <div class="fieldgap">
+                <span class="note"><b>1. Your personal link.</b> Set it as your New Tab Override address (or bookmark it). Your whole setup is inside the link, so it comes back by itself after a wipe and syncs with your bookmarks.</span>
+                <input id="k-link" type="text" readonly spellcheck="false" aria-label="Personal link" />
+                <div class="row2"><button class="filebtn" id="k-copy" type="button">Copy link</button><span class="note" id="k-size"></span></div>
+                <span class="note"><b>2. A backup file.</b> Includes your uploaded images, which a link cannot hold.</span>
+                <div class="row2"><button class="filebtn alt" id="k-dl" type="button">Download backup</button>
+                  <label class="filebtn alt">Restore backup<input id="k-file" type="file" accept="application/json,.json" hidden /></label></div>
+                <span class="note"><b>3. Ask the browser to keep it.</b> Stops automatic clean-ups when your disk is low. It cannot stop you clearing the data yourself.</span>
+                <div class="row2"><button class="filebtn alt" id="k-persist" type="button">Protect my settings</button></div>
+                <p class="note" id="k-note" aria-live="polite"></p>
+              </div>
+            </section>
+            <section>
+              <h2>Search engine</h2>
+              <div class="fieldgap">
+                <select id="g-engine" aria-label="Search engine"></select>
+                <label id="g-custom-wrap" class="fieldgap" hidden>
+                  <span class="note">Address with <code>{q}</code> where the search words go</span>
+                  <input id="g-custom" type="text" placeholder="https://search.example.com/?q={q}" spellcheck="false" />
+                </label>
+                <p class="note" id="g-engine-preview"></p>
+              </div>
+            </section>
+            <section>
+              <h2>Clock and greeting</h2>
+              <div class="fieldgap">
+                <label class="fieldgap"><span class="note">Your name</span><input id="g-name" type="text" placeholder="Shown in the greeting" /></label>
+                <label class="chk"><input id="g-24h" type="checkbox" checked /> 24-hour clock</label>
+              </div>
+            </section>
+            <section>
+              <h2>Shortcuts</h2>
+              <label class="chk"><input id="g-keys" type="checkbox" checked /> Press a link's key to open it</label>
+              <p class="note">Set each link's key in the Links tab.</p>
+            </section>
+            <div class="refs-wrap">
+              <details class="refs">
+                <summary>References and credits</summary>
+                <ul>
+                  <li><b>CRT text flicker.</b> The look comes from the idea in
+                    <a href="https://codemyui.com/crt-screen-text-flicker-animation-in-pure-css/" target="_blank" rel="noopener noreferrer">"CRT Screen Text Flicker Animation In Pure CSS"</a>
+                    on CodeMyUI (article by Saijo George, January 2020), which shows a CodePen by Patrick H. Lauke. No license is stated for that pen, so none of its code is used here. The scanlines, rolling band, color fringing and flicker timing in this project are written from scratch.</li>
+                  <li><b>Retro RPG box style.</b> A fan-made homage to the look of
+                    <a href="https://undertale.com" target="_blank" rel="noopener noreferrer">Undertale</a> by Toby Fox: black boxes with thick white frames, a heart that points at your choice, and dialogue-style text starting with "*". Not affiliated with or endorsed by the game's creator. No game art, characters, music, writing or fonts are used. The heart is a plain pixel shape drawn for this project, and the page uses your system's monospace font.</li>
+                  <li><b>Tangerine theme.</b> A fan homage to the bittersweet mood of the Korean drama <i>When Life Gives You Tangerines</i> (Netflix, 2025), set on Jeju Island, where love, joy and sorrow arrive together. Only that mood is borrowed: warm tangerine orange, soft cream, a serif face, and an original fruit mascot that smiles and cries at the same time. No characters, scenes, posters, logos or text from the show are used, and the project is not affiliated with it. The search placeholder line was supplied by the project owner and can be changed in Customize.</li>
+                  <li><b>Ryōmen theme.</b> The figure comes from an old legend. The
+                    <a href="https://en.wikipedia.org/wiki/Nihon_Shoki" target="_blank" rel="noopener noreferrer">Nihon Shoki</a> (720 CE), in its entry for the 65th year of Emperor Nintoku, describes a man of Hida Province with one body and two faces set back to back, with hands and feet for each, swords at both sides and a bow used with four hands. See
+                    <a href="https://yokai.jp/en/yokai/ryomen-sukuna" target="_blank" rel="noopener noreferrer">Yokai.jp: Ryōmen Sukuna</a> for the legend and later folklore, and W. G. Aston's 1896
+                    <a href="https://archive.org/details/nihongichronicl00astogoog" target="_blank" rel="noopener noreferrer">Nihongi translation</a> (public domain). The specter here is an original drawing of that legend: two faces on one head, four arms with a bow, an arrow and two swords, and a body that fades away.</li>
+                  <li><b>Ocean Glass theme and Halftone poster style.</b> The navy-and-cream palette, printed halftone dots, bold title type and cream-framed picture follow the general look of vintage screen-printed character posters. The sleepy seal is an original drawing for this project; no characters, artwork or text from any franchise are used, and the project is not affiliated with any. The search placeholder is the project's own line.</li>
+                  <li><b>Manga ink style.</b> Heavy black ink, halftone dots, hard red shadows and focus lines are the general look of dark-fantasy manga, with the mood inspired by Jujutsu Kaisen by Gege Akutami. Not affiliated with or endorsed by the author or publisher. No artwork, character designs or writing from the series are used, and the series' character is not drawn. The one quotation is the search box line, chosen by the project owner; it can be changed or cleared in Customize, Theme.</li>
+                  <li><b>Crimson Styx theme.</b> A fan homage to the look of
+                    <a href="https://www.supergiantgames.com/games/hades/" target="_blank" rel="noopener noreferrer">Hades</a> by Supergiant Games: a near-black ground, crimson and gold, double gold frames, a Greek-key border and rising embers. Not affiliated with or endorsed by the studio. No game art, characters, music, writing or fonts are used.</li>
+                  <li><b>The three-headed hound.</b> The myth is ancient and in the public domain: Hesiod's
+                    <a href="https://cts.perseids.org/read/greekLit/tlg0020/tlg001/perseus-eng2/290-390" target="_blank" rel="noopener noreferrer">Theogony</a>
+                    (about 700 BCE) names Cerberus, and
+                    <a href="https://theoi.com/Ther/KuonKerberos.html" target="_blank" rel="noopener noreferrer">Theoi</a> gathers the ancient sources. The game's own character designs are not public domain, so the hound here is an original drawing made for this project: a standing dog in side view with three necks, bold dark outlines and flat color, in the theme's crimson and gold. It is not the game's version of the character.</li>
+                  <li><b>Greek key border.</b> The repeating pattern is an ancient decorative motif (see
+                    <a href="https://en.wikipedia.org/wiki/Meander_(art)" target="_blank" rel="noopener noreferrer">Meander (art)</a>). The version used here is drawn from scratch.</li>
+                  <li><b>Flicker safety.</b> The flicker follows the limits in
+                    <a href="https://www.w3.org/WAI/WCAG21/Understanding/three-flashes-or-below-threshold.html" target="_blank" rel="noopener noreferrer">WCAG 2.3.1, Three Flashes or Below Threshold</a>
+                    (dips of 6% or less, well under three per second), can be switched off, and stops when
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noopener noreferrer">prefers-reduced-motion</a> is on.</li>
+                </ul>
+              </details>
+            </div>
+          </div>
+
+          <div class="ptab" data-ptab="media">
+            <section>
+              <h2>Art slot</h2>
+              <div class="seg" id="c-art"></div>
+              <p class="ctl mt0" id="art-note"></p>
+              <div class="fieldgap" id="art-custom" hidden>
+                <label class="fieldgap"><span class="note">Image or GIF address</span>
+                  <input id="art-url" type="text" placeholder="https://example.com/my-mascot.gif" spellcheck="false" /></label>
+                <div class="row2">
+                  <label class="filebtn">Upload a file<input id="art-file" class="sr" type="file" accept="image/*" /></label>
+                  <button class="reset" id="art-clear" type="button">Remove</button>
+                </div>
+                <p class="src-note" id="art-src-note"></p>
+              </div>
+              <label class="ctl mt">Size <b id="v-art">120px</b>
+                <input id="r-art" type="range" min="40" max="320" value="120" /></label>
+            </section>
+            <section>
+              <h2>Background</h2>
+              <div class="seg" id="c-bg"></div>
+              <div class="fieldgap" id="bg-custom" hidden>
+                <label class="fieldgap"><span class="note">Image or GIF address</span>
+                  <input id="bg-url" type="text" placeholder="https://example.com/wallpaper.gif" spellcheck="false" /></label>
+                <div class="row2">
+                  <label class="filebtn">Upload a file<input id="bg-file" class="sr" type="file" accept="image/*" /></label>
+                  <button class="reset" id="bg-clear" type="button">Remove</button>
+                </div>
+                <div class="seg" id="c-fit"></div>
+                <p class="src-note" id="bg-src-note"></p>
+              </div>
+              <label class="ctl mt">Overlay <b id="v-ov">45%</b>
+                <input id="r-ov" type="range" min="0" max="100" value="45" /></label>
+            </section>
+          </div>
+        </aside>
+  </div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
