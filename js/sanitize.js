@@ -82,7 +82,7 @@ export function oneOf(v, allowed, fallback) {
 // ---------- text ----------
 
 // control characters, zero-width characters and left-to-right / right-to-left overrides
-const INVISIBLE = /[\u0000-\u001f\u007f-\u009f​-‏  ‪-‮⁠-⁤⁦-⁩﻿]/g;
+const INVISIBLE = /[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028\u2029\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff]/g;
 
 /** Plain text for names, titles and labels. Output is only ever shown with textContent, never as HTML. */
 export function safeText(v, max, fallback = "") {
@@ -102,7 +102,7 @@ export function safeKey(v) {
 // ---------- addresses ----------
 
 // whitespace, control characters and direction overrides are never valid inside an address
-const BAD_URL_CHAR = /[\u0000-\x20\u007f-\u009f  ​-‏‪-‮⁠-⁤⁦-⁩﻿]/;
+const BAD_URL_CHAR = /[\u0000-\x20\u007f-\u009f\u2028\u2029\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff]/;
 
 // "javascript:1" looks like host:port to the check below, so names that are really schemes are refused as hosts
 const SCHEME_NAMES = new Set(["javascript", "data", "vbscript", "file", "blob", "about", "chrome", "mailto", "tel", "sms",
