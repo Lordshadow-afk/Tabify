@@ -1,0 +1,31 @@
+/* ---- "Halftone poster" box style: navy ground, cream panels, heavy type, lifted shadows ---- */
+.sp[data-skin="poster"] { font-weight: 800; background-image: radial-gradient(circle at 1px 1px, rgba(246,241,227,.1) 1.2px, transparent 1.7px); background-size: 8px 8px; }
+.sp[data-skin="poster"] .clock { font-family: "Arial Black", "Arial Bold", Impact, "Helvetica Neue", sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: .01em; text-shadow: 4px 4px 0 rgba(0,0,0,.28); }
+.sp[data-skin="poster"] .greeting { text-transform: uppercase; letter-spacing: .16em; font-size: .76rem; color: var(--muted); }
+.sp[data-skin="poster"][data-layout] .search,
+.sp[data-skin="poster"][data-layout="cards"] .group,
+.sp[data-skin="poster"][data-layout="accordion"] .group,
+.sp[data-skin="poster"][data-layout="minimal"] .group__title,
+.sp[data-skin="poster"][data-layout="minimal"] .group__links { border: 0; background: var(--surface); color: var(--bg); box-shadow: 0 6px 0 rgba(0,0,0,.3); }
+.sp[data-skin="poster"][data-layout] .group:hover,
+.sp[data-skin="poster"][data-layout="accordion"] .group.open { box-shadow: 0 6px 0 rgba(0,0,0,.3), 0 0 0 4px var(--accent); }
+.sp[data-skin="poster"][data-layout="minimal"] .group:hover { box-shadow: none; }
+.sp[data-skin="poster"][data-layout="minimal"] .group:hover .group__title,
+.sp[data-skin="poster"][data-layout="minimal"] .group.open .group__title { background: var(--accent); color: var(--accentText); }
+.sp[data-skin="poster"] .group__title { color: var(--bg); font-family: "Arial Black", "Arial Bold", Impact, sans-serif; font-weight: 900; font-size: .85rem; letter-spacing: .12em; }
+.sp[data-skin="poster"][data-layout="cards"] .group__title,
+.sp[data-skin="poster"][data-layout="accordion"] .group__title { align-self: flex-start; width: max-content; max-width: 100%; padding: 0 0 2px; border-bottom: 4px solid var(--accent); }
+.sp[data-skin="poster"][data-layout] .group__links a { color: var(--bg); }
+.sp[data-skin="poster"][data-layout] .group__links a:hover,
+.sp[data-skin="poster"][data-layout] .group__links a:focus-visible { background: var(--bg); color: var(--surface); transform: none; padding-left: 14px; outline: 0; }
+.sp[data-skin="poster"] kbd { border-width: 2px; border-radius: 3px; opacity: .75; }
+.sp[data-skin="poster"] .engine-menu { border: 3px solid var(--surface); border-radius: 8px; background: var(--bg); box-shadow: 0 8px 0 rgba(0,0,0,.35); }
+.sp[data-skin="poster"] .engine-menu button { color: var(--surface); font-weight: 800; }
+.sp[data-skin="poster"] .engine-menu button:hover, .sp[data-skin="poster"] .engine-menu button:focus-visible { background: var(--accent); color: var(--accentText); }
+.sp[data-skin="poster"] .engine-menu .engine-sep { background: rgba(246,241,227,.25); }
+.sp[data-skin="poster"] .search__engine { background: var(--accent); color: var(--accentText); padding: 4px 9px; border-radius: 3px; font-weight: 900; letter-spacing: .1em; }
+.sp[data-skin="poster"] .search input { color: var(--bg); font-weight: 800; }
+.sp[data-skin="poster"] .search input::placeholder { color: var(--bg); opacity: .5; }
+.sp[data-skin="poster"] .sp-fab { color: var(--bg); border: 0; font-weight: 900; box-shadow: 0 5px 0 rgba(0,0,0,.3); }
+.sp[data-skin="poster"] .sp-fab:hover { background: var(--accent); color: var(--accentText); }
+.sp[data-skin="poster"] .art { box-sizing: border-box; padding: 7px; background: var(--surface); border-radius: 6px; box-shadow: 0 6px 0 rgba(0,0,0,.3); }

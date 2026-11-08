@@ -1,0 +1,44 @@
+/* skins-retro.css: the Retro RPG box style and the CRT screen effect */
+/* ---- "Retro RPG" box style: black boxes, thick white frames, heart pointer, dialogue text ---- */
+.sp[data-skin="retro"] { font-weight: 700; letter-spacing: .03em; }
+.sp[data-skin="retro"][data-layout] .search,
+.sp[data-skin="retro"][data-layout] .group,
+.sp[data-skin="retro"][data-layout="minimal"] .group__title,
+.sp[data-skin="retro"][data-layout="minimal"] .group__links { border: 4px solid var(--border); border-radius: 0; background: var(--surface); }
+.sp[data-skin="retro"][data-layout="minimal"] .group__title { color: var(--text); }
+.sp[data-skin="retro"][data-layout="minimal"] .group:hover .group__title,
+.sp[data-skin="retro"][data-layout="minimal"] .group.open .group__title { background: var(--accent); color: var(--accentText); border-color: var(--accent); }
+.sp[data-skin="retro"][data-layout] .group:hover,
+.sp[data-skin="retro"][data-layout="accordion"] .group.open { border-color: var(--accent); }
+.sp[data-skin="retro"] .clock { letter-spacing: .06em; }
+.sp[data-skin="retro"] .greeting { color: var(--text); }
+.sp[data-skin="retro"] .greeting::before { content: "* "; color: var(--accent); }
+.sp[data-skin="retro"] .group__title::before { content: "* "; }
+.sp[data-skin="retro"] .group__links a span::before { content: "\2665"; display: inline-block; width: 1.5em; color: #ff2a2a; visibility: hidden; }
+.sp[data-skin="retro"] .group__links a:hover span::before,
+.sp[data-skin="retro"] .group__links a:focus-visible span::before { visibility: visible; }
+.sp[data-skin="retro"][data-layout] .group__links a { padding-left: 0; }
+.sp[data-skin="retro"][data-layout] .group__links a:hover,
+.sp[data-skin="retro"][data-layout] .group__links a:focus-visible { background: transparent; color: var(--accent); transform: none; padding-left: 0; outline: 0; }
+.sp[data-skin="retro"] kbd { border-width: 2px; opacity: .8; }
+.sp .greeting.type { animation: typein 1.4s steps(38, end) both; }
+@keyframes typein { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+/* ---- CRT screen effect (original implementation; idea credited under References) ---- */
+.sp.fx-crt::before, .sp.fx-crt::after { content: ""; position: absolute; left: 0; right: 0; pointer-events: none; z-index: 3; }
+.sp.fx-crt::after { top: 0; bottom: 0;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,.2) 0, rgba(0,0,0,.2) 1px, transparent 1px, transparent 3px),
+              radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.4) 100%); }
+.sp.fx-crt::before { height: 22%; top: -22%; background: linear-gradient(to bottom, transparent, rgba(255,255,255,.05) 50%, transparent); animation: crtroll 8s linear infinite; }
+@keyframes crtroll { to { top: 110%; } }
+.sp.fx-crt .sp__page {
+  text-shadow: 1px 0 rgba(255,40,80,.35), -1px 0 rgba(40,220,255,.3), 0 0 8px color-mix(in srgb, var(--text) 30%, transparent);
+  animation: crtflicker 4.2s linear infinite, crtshift 6s steps(1) infinite;
+}
+/* dips are small (6% at most) and far apart, so there is no strong flashing */
+@keyframes crtflicker { 0%, 100% { opacity: 1; } 8% { opacity: .97; } 9% { opacity: 1; } 31% { opacity: .95; } 32% { opacity: 1; } 57% { opacity: .97; } 58% { opacity: .94; } 59% { opacity: 1; } 83% { opacity: .96; } 84% { opacity: 1; } }
+@keyframes crtshift {
+  0%, 94%, 100% { text-shadow: 1px 0 rgba(255,40,80,.35), -1px 0 rgba(40,220,255,.3), 0 0 8px color-mix(in srgb, var(--text) 30%, transparent); }
+  95% { text-shadow: 3px 0 rgba(255,40,80,.5), -3px 0 rgba(40,220,255,.45), 0 0 8px color-mix(in srgb, var(--text) 30%, transparent); }
+  97% { text-shadow: -2px 0 rgba(255,40,80,.4), 2px 0 rgba(40,220,255,.35), 0 0 8px color-mix(in srgb, var(--text) 30%, transparent); }
+}

@@ -1,0 +1,40 @@
+/* ---- "Manga ink" box style: heavy black ink borders, hard red shadows, halftone dots, focus lines ---- */
+.sp[data-skin="ink"] {
+  background-image: radial-gradient(circle at 0% 100%, rgba(225,29,46,.38), transparent 42%),
+                    repeating-conic-gradient(from 0deg at 88% 8%, rgba(255,255,255,.04) 0 .8deg, transparent .8deg 5deg),
+                    radial-gradient(circle at 1px 1px, rgba(255,255,255,.07) 1px, transparent 1.5px);
+  background-size: auto, auto, 6px 6px;
+}
+.sp[data-skin="ink"] .clock, .sp[data-skin="ink"] .group__title, .sp[data-skin="ink"] .search__engine {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif; }
+.sp[data-skin="ink"] .clock { font-weight: 400; letter-spacing: .04em; color: var(--bg); -webkit-text-stroke: 2px var(--text); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--accent); }
+.sp[data-skin="ink"] .greeting { text-transform: uppercase; letter-spacing: .18em; font-size: .78rem; color: var(--muted); }
+.sp[data-skin="ink"] .greeting::before { content: ""; display: inline-block; width: 6px; height: 1em; margin-right: 10px; vertical-align: -.15em; background: var(--accent); transform: skewX(-12deg); }
+.sp[data-skin="ink"][data-layout] .search,
+.sp[data-skin="ink"][data-layout] .group,
+.sp[data-skin="ink"][data-layout="minimal"] .group__title,
+.sp[data-skin="ink"][data-layout="minimal"] .group__links { border: 3px solid var(--border); border-radius: 0; background: var(--surface); box-shadow: 6px 6px 0 var(--accent); }
+.sp[data-skin="ink"][data-layout="minimal"] .group__title { box-shadow: 4px 4px 0 var(--accent); color: var(--text); }
+.sp[data-skin="ink"][data-layout="minimal"] .group:hover .group__title,
+.sp[data-skin="ink"][data-layout="minimal"] .group.open .group__title { background: var(--accent); color: var(--accentText); border-color: var(--border); }
+.sp[data-skin="ink"][data-layout="cards"] .group,
+.sp[data-skin="ink"][data-layout="accordion"] .group { transition: box-shadow .15s, transform .15s, flex .4s cubic-bezier(.2,.8,.2,1), border-color .2s; transform: rotate(-.35deg); }
+.sp[data-skin="ink"][data-layout="cards"] .group:nth-child(even),
+.sp[data-skin="ink"][data-layout="accordion"] .group:nth-child(even) { transform: rotate(.35deg); }
+.sp[data-skin="ink"][data-layout="cards"] .group:hover,
+.sp[data-skin="ink"][data-layout="accordion"] .group:hover,
+.sp[data-skin="ink"][data-layout="accordion"] .group.open { box-shadow: 9px 9px 0 var(--accent); transform: translate(-3px, -3px) rotate(0); border-color: var(--border); }
+.sp[data-skin="ink"][data-layout="cards"] .group__title,
+.sp[data-skin="ink"][data-layout="accordion"] .group__title { display: inline-block; align-self: flex-start; width: max-content; max-width: 100%; padding: 3px 12px; margin-bottom: 8px; border: 0;
+  background: var(--accent); color: var(--accentText); letter-spacing: .14em; font-size: .85rem; transform: skewX(-9deg); }
+.sp[data-skin="ink"] .group__links a span::before { content: "\25B6"; display: inline-block; width: 1.4em; font-size: .65em; color: var(--accent); visibility: hidden; }
+.sp[data-skin="ink"] .group__links a:hover span::before, .sp[data-skin="ink"] .group__links a:focus-visible span::before { visibility: visible; color: var(--accentText); }
+.sp[data-skin="ink"][data-layout] .group__links a { padding-left: 8px; }
+.sp[data-skin="ink"][data-layout] .group__links a:hover,
+.sp[data-skin="ink"][data-layout] .group__links a:focus-visible { background: var(--accent); color: var(--accentText); transform: skewX(-6deg) translateX(4px); padding-left: 8px; outline: 0; }
+.sp[data-skin="ink"] kbd { border-width: 2px; border-radius: 0; opacity: .8; }
+.sp[data-skin="ink"] .search input { font-weight: 700; }
+.sp[data-skin="ink"] .search input::placeholder { color: var(--muted); font-style: italic; font-weight: 400; }
+.sp[data-skin="ink"] .sp__page::after { content: "\4E21\9762\5BBF\5110"; position: absolute; right: -6px; bottom: -14px; z-index: -1; pointer-events: none;
+  font: 400 150px/1 Impact, "Noto Sans JP", "Yu Gothic", "Hiragino Sans", sans-serif; writing-mode: vertical-rl; letter-spacing: .05em;
+  color: transparent; -webkit-text-stroke: 2px rgba(242,239,233,.08); }
