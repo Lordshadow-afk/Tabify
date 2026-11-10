@@ -1,4 +1,4 @@
-/* layouts.css: the three page layouts (accordion, minimal, cards). Box styles are in skins-*.css */
+/* layouts.css: the page layouts. Accordion lives in layout-accordion.css. Box styles are in skins-*.css */
 
 /* ---- shared: readable secondary text, clearer shortcut hints, keyboard focus, reduced motion ---- */
 .sp { --soft: color-mix(in srgb, var(--muted) 60%, var(--text)); }
@@ -8,29 +8,6 @@
 .sp[data-skin=""] .group__title { display: flex; align-items: center; gap: .6em; color: var(--text); }
 .sp[data-skin=""] .group__title::before { content: ""; flex: none; width: .5em; height: .5em; border-radius: 50%; background: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .sp .group, .sp .group__links, .sp .group__links a { transition: none !important; } }
-
-/* ---- accordion: the original layout, stretched to fill the screen. One card open, the rest collapsed ---- */
-.sp[data-layout="accordion"] .sp__page { max-width: min(1680px, 100%); min-height: 100dvh; box-sizing: border-box; padding: clamp(20px, 4dvh, 44px) clamp(20px, 3cqw, 56px) 84px; display: flex; flex-direction: column; gap: clamp(14px, 2.4dvh, 26px); }
-.sp[data-layout="accordion"] .clock { font-size: clamp(3.4rem, 8dvh + 1cqw, 6.2rem); }
-.sp[data-layout="accordion"] .art { position: absolute; top: clamp(20px, 4dvh, 44px); right: clamp(20px, 3cqw, 56px); width: clamp(100px, min(calc(var(--art) * 1.5), 19dvh), 230px); height: clamp(100px, min(calc(var(--art) * 1.5), 19dvh), 230px); }
-.sp[data-layout="accordion"] .search { width: 100%; max-width: min(920px, calc(100% - 280px)); }
-.sp[data-layout="accordion"] .groups { flex: 1; min-height: 280px; max-height: clamp(320px, 58dvh, 640px); display: flex; gap: 12px; }
-.sp[data-layout="accordion"] .group { flex: 1 1 0 !important; min-width: 0; position: relative; overflow: hidden; padding: 22px 22px 18px; display: flex; flex-direction: column; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: flex .4s cubic-bezier(.2,.8,.2,1), border-color .2s; }
-.sp[data-layout="accordion"] .group:hover, .sp[data-layout="accordion"] .group.open, .sp[data-layout="accordion"] .group:focus-within { flex: 4 1 0 !important; border-color: var(--accent); }
-.sp[data-layout="accordion"] .group__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sp[data-layout="accordion"] .group__links { display: flex; flex-direction: column; gap: 2px; opacity: .5; transition: opacity .25s .08s; }
-.sp[data-layout="accordion"] .group:hover .group__links, .sp[data-layout="accordion"] .group.open .group__links, .sp[data-layout="accordion"] .group:focus-within .group__links { opacity: 1; }
-.sp[data-layout="accordion"] .group:not(:hover):not(.open):not(:focus-within) kbd { visibility: hidden; }
-.sp[data-layout="accordion"] .group__links a { padding: clamp(9px, 1.6dvh, 16px) 10px; font-size: clamp(1rem, 1.1dvh + .4rem, 1.2rem); border-radius: calc(var(--radius) / 2); white-space: nowrap; }
-.sp[data-layout="accordion"] .group__links a:hover { background: var(--accent); color: var(--accentText); transform: translateX(4px); }
-@container (max-width: 760px) {
-  .sp[data-layout="accordion"] .groups { flex-direction: column; }
-  .sp[data-layout="accordion"] .group, .sp[data-layout="accordion"] .group:hover, .sp[data-layout="accordion"] .group.open, .sp[data-layout="accordion"] .group:focus-within { flex: none !important; }
-  .sp[data-layout="accordion"] .group__links { opacity: 1; }
-  .sp[data-layout="accordion"] .group kbd { visibility: visible !important; }
-  .sp[data-layout="accordion"] .search { max-width: none; }
-  .sp[data-layout="accordion"] .art { position: static; width: 120px; height: 120px; }
-}
 
 /* minimal: the original centred stack, scaled to the screen so it is not a small island at the top */
 .sp[data-layout="minimal"] .sp__page { max-width: 820px; min-height: 100dvh; margin: 0 auto; box-sizing: border-box; padding: clamp(20px, 4dvh, 44px) 24px 84px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(14px, 2.6dvh, 28px); text-align: center; }
@@ -47,14 +24,16 @@
 .sp[data-layout="minimal"] .group__links a { padding: 10px 14px; border-radius: min(var(--radius), 12px); white-space: nowrap; font-size: 1.05rem; }
 .sp[data-layout="minimal"] .group__links a:hover { background: var(--accent); color: var(--accentText); }
 
-/* cards */
-.sp[data-layout="cards"] .sp__page { max-width: 1040px; min-height: 600px; padding: 36px 24px 56px; display: flex; flex-direction: column; gap: 30px; }
-.sp[data-layout="cards"] .art { position: absolute; top: 30px; right: 24px; width: clamp(110px, calc(var(--art) * 1.2), 20cqw); height: clamp(110px, calc(var(--art) * 1.2), 20cqw); }
-.sp[data-layout="cards"] .search { width: 100%; }
-.sp[data-layout="cards"] .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-.sp[data-layout="cards"] .group { padding: 16px 18px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+/* cards: the original layout (clock left, mascot top-right, a card per group), scaled to fill the screen */
+.sp[data-layout="cards"] .sp__page { max-width: min(1500px, 100%); min-height: 100dvh; margin: 0 auto; box-sizing: border-box; padding: clamp(20px, 4dvh, 44px) clamp(20px, 3cqw, 48px) 80px; display: flex; flex-direction: column; gap: clamp(14px, 2.6dvh, 28px); }
+.sp[data-layout="cards"] .clock { font-size: clamp(3.2rem, 7.5dvh + 1cqw, 5.8rem); }
+.sp[data-layout="cards"] .art { position: absolute; top: clamp(20px, 4dvh, 44px); right: clamp(20px, 3cqw, 48px); width: clamp(120px, min(calc(var(--art) * 1.8), 25dvh), 300px); height: clamp(120px, min(calc(var(--art) * 1.8), 25dvh), 300px); }
+.sp[data-layout="cards"] .search { order: 2; width: 100%; margin-top: auto; }
+.sp[data-layout="cards"] .groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); grid-auto-rows: minmax(clamp(230px, 42dvh, 480px), auto); gap: 16px; order: 1; margin-top: clamp(28px, 11dvh, 110px); }
+.sp[data-layout="cards"] .group { box-sizing: border-box; max-width: 560px; min-width: 0; padding: 20px 22px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .sp[data-layout="cards"] .group:hover { border-color: var(--accent); }
-.sp[data-layout="cards"] .group__title { padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(--border); }
-.sp[data-layout="cards"] .group__links a { padding: 7px 8px; margin: 0 -8px; border-radius: calc(var(--radius) / 2); }
-.sp[data-layout="cards"] .group__links a:hover { background: var(--accent); color: var(--accentText); padding-left: 14px; }
-@container (max-width: 600px) { .sp[data-layout="cards"] .art { position: static; } }
+.sp[data-layout="cards"] .group__title { padding-bottom: 12px; margin-bottom: 8px; border-bottom: 1px solid var(--border); }
+.sp[data-layout="cards"] .group__links a { padding: clamp(8px, 1.4dvh, 14px) 10px; margin: 0 -10px; font-size: clamp(1rem, 1dvh + .4rem, 1.15rem); border-radius: calc(var(--radius) / 2); }
+.sp[data-layout="cards"] .group__links a:hover { background: var(--accent); color: var(--accentText); padding-left: 16px; }
+@container (max-width: 760px) { .sp[data-layout="cards"] .art { position: static; width: 110px; height: 110px; } .sp[data-layout="cards"] .search { order: 0; margin-top: 0; } .sp[data-layout="cards"] .groups { margin-top: 0; } .sp[data-layout="cards"] .groups { grid-template-columns: 1fr; grid-auto-rows: auto; } }
+@container (min-width: 761px) { .sp[data-layout="cards"][data-skin=""] .groups { margin-top: clamp(40px, 14dvh, 140px); } }

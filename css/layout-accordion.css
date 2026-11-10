@@ -1,0 +1,22 @@
+/* ---- accordion: the original layout, stretched to fill the screen. One card open, the rest collapsed ---- */
+.sp[data-layout="accordion"] .sp__page { max-width: min(1680px, 100%); min-height: 100dvh; box-sizing: border-box; padding: clamp(20px, 4dvh, 44px) clamp(20px, 3cqw, 56px) 84px; display: flex; flex-direction: column; gap: clamp(14px, 2.4dvh, 26px); }
+.sp[data-layout="accordion"] .clock { font-size: clamp(3.4rem, 8dvh + 1cqw, 6.2rem); }
+.sp[data-layout="accordion"] .art { position: absolute; top: clamp(20px, 4dvh, 44px); right: clamp(20px, 3cqw, 56px); width: clamp(100px, min(calc(var(--art) * 1.5), 19dvh), 230px); height: clamp(100px, min(calc(var(--art) * 1.5), 19dvh), 230px); }
+.sp[data-layout="accordion"] .search { width: 100%; max-width: min(920px, calc(100% - 280px)); }
+.sp[data-layout="accordion"] .groups { flex: 1; min-height: 280px; max-height: clamp(320px, 58dvh, 640px); display: flex; gap: 12px; }
+.sp[data-layout="accordion"] .group { flex: 1 1 0 !important; min-width: 0; position: relative; overflow: hidden; padding: 22px 22px 18px; display: flex; flex-direction: column; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: flex .4s cubic-bezier(.2,.8,.2,1), border-color .2s; }
+.sp[data-layout="accordion"] .group:hover, .sp[data-layout="accordion"] .group.open, .sp[data-layout="accordion"] .group:focus-within { flex: 4 1 0 !important; border-color: var(--accent); }
+.sp[data-layout="accordion"] .group__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sp[data-layout="accordion"] .group__links { display: flex; flex-direction: column; gap: 2px; opacity: .5; transition: opacity .25s .08s; }
+.sp[data-layout="accordion"] .group:hover .group__links, .sp[data-layout="accordion"] .group.open .group__links, .sp[data-layout="accordion"] .group:focus-within .group__links { opacity: 1; }
+.sp[data-layout="accordion"] .group:not(:hover):not(.open):not(:focus-within) kbd { visibility: hidden; }
+.sp[data-layout="accordion"] .group__links a { padding: clamp(9px, 1.6dvh, 16px) 10px; font-size: clamp(1rem, 1.1dvh + .4rem, 1.2rem); border-radius: calc(var(--radius) / 2); white-space: nowrap; }
+.sp[data-layout="accordion"] .group__links a:hover { background: var(--accent); color: var(--accentText); transform: translateX(4px); }
+@container (max-width: 760px) {
+  .sp[data-layout="accordion"] .groups { flex-direction: column; }
+  .sp[data-layout="accordion"] .group, .sp[data-layout="accordion"] .group:hover, .sp[data-layout="accordion"] .group.open, .sp[data-layout="accordion"] .group:focus-within { flex: none !important; }
+  .sp[data-layout="accordion"] .group__links { opacity: 1; }
+  .sp[data-layout="accordion"] .group kbd { visibility: visible !important; }
+  .sp[data-layout="accordion"] .search { max-width: none; }
+  .sp[data-layout="accordion"] .art { position: static; width: 120px; height: 120px; }
+}
