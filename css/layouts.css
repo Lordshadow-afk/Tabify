@@ -1,21 +1,35 @@
 /* layouts.css: the three page layouts (accordion, minimal, cards). Box styles are in skins-*.css */
-/* accordion */
-.sp[data-layout="accordion"] .sp__page { max-width: 1240px; min-height: 600px; padding: 36px 28px 28px; display: flex; flex-direction: column; gap: 24px; }
-.sp[data-layout="accordion"] .art { position: absolute; top: 30px; right: 28px; }
-.sp[data-layout="accordion"] .search { width: 100%; max-width: 640px; }
-.sp[data-layout="accordion"] .groups { flex: 1; min-height: 280px; display: flex; gap: 10px; }
-.sp[data-layout="accordion"] .group { flex: 1 1 0; min-width: 0; overflow: hidden; padding: 20px; display: flex; flex-direction: column; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: flex .4s cubic-bezier(.2,.8,.2,1), border-color .2s; }
-.sp[data-layout="accordion"] .group:hover, .sp[data-layout="accordion"] .group.open { flex: 4 1 0; border-color: var(--accent); }
+
+/* ---- shared: readable secondary text, clearer shortcut hints, keyboard focus, reduced motion ---- */
+.sp { --soft: color-mix(in srgb, var(--muted) 60%, var(--text)); }
+.sp .greeting, .sp .search input::placeholder { color: var(--soft); }
+.sp[data-layout] kbd { min-width: 1.9em; text-align: center; font-family: var(--f-mono); font-size: .75rem; padding: 3px 6px; opacity: .85; }
+.sp .group__links a:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.sp[data-skin=""] .group__title { display: flex; align-items: center; gap: .6em; color: var(--text); }
+.sp[data-skin=""] .group__title::before { content: ""; flex: none; width: .5em; height: .5em; border-radius: 50%; background: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .sp .group, .sp .group__links, .sp .group__links a { transition: none !important; } }
+
+/* accordion: one card open, the rest collapsed, stretched to fill the screen */
+.sp[data-layout="accordion"] .sp__page { max-width: min(1680px, 100%); min-height: 100dvh; box-sizing: border-box; padding: clamp(20px, 4dvh, 44px) clamp(20px, 3cqw, 56px) 84px; display: flex; flex-direction: column; gap: clamp(14px, 2.4dvh, 26px); }
+.sp[data-layout="accordion"] .clock { font-size: clamp(3.4rem, 8dvh + 1cqw, 6.2rem); }
+.sp[data-layout="accordion"] .art { position: absolute; top: clamp(20px, 4dvh, 44px); right: clamp(20px, 3cqw, 56px); width: clamp(100px, min(calc(var(--art) * 1.5), 19dvh), 230px); height: clamp(100px, min(calc(var(--art) * 1.5), 19dvh), 230px); }
+.sp[data-layout="accordion"] .search { width: 100%; max-width: min(920px, calc(100% - 280px)); }
+.sp[data-layout="accordion"] .groups { flex: 1; min-height: 280px; max-height: clamp(320px, 58dvh, 640px); display: flex; gap: 12px; }
+.sp[data-layout="accordion"] .group { flex: 1 1 0 !important; min-width: 0; position: relative; overflow: hidden; padding: 22px 22px 18px; display: flex; flex-direction: column; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: flex .4s cubic-bezier(.2,.8,.2,1), border-color .2s; }
+.sp[data-layout="accordion"] .group:hover, .sp[data-layout="accordion"] .group.open, .sp[data-layout="accordion"] .group:focus-within { flex: 4 1 0 !important; border-color: var(--accent); }
 .sp[data-layout="accordion"] .group__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sp[data-layout="accordion"] .group__links { display: flex; flex-direction: column; gap: 2px; opacity: 0; transform: translateY(8px); transition: opacity .25s .08s, transform .25s .08s; }
-.sp[data-layout="accordion"] .group:hover .group__links, .sp[data-layout="accordion"] .group.open .group__links { opacity: 1; transform: none; }
-.sp[data-layout="accordion"] .group__links a { padding: 9px 10px; border-radius: calc(var(--radius) / 2); white-space: nowrap; }
+.sp[data-layout="accordion"] .group__links { display: flex; flex-direction: column; gap: 2px; opacity: .5; transition: opacity .25s .08s; }
+.sp[data-layout="accordion"] .group:hover .group__links, .sp[data-layout="accordion"] .group.open .group__links, .sp[data-layout="accordion"] .group:focus-within .group__links { opacity: 1; }
+.sp[data-layout="accordion"] .group:not(:hover):not(.open):not(:focus-within) kbd { visibility: hidden; }
+.sp[data-layout="accordion"] .group__links a { padding: clamp(9px, 1.6dvh, 16px) 10px; font-size: clamp(1rem, 1.1dvh + .4rem, 1.2rem); border-radius: calc(var(--radius) / 2); white-space: nowrap; }
 .sp[data-layout="accordion"] .group__links a:hover { background: var(--accent); color: var(--accentText); transform: translateX(4px); }
-@container (max-width: 600px) {
+@container (max-width: 760px) {
   .sp[data-layout="accordion"] .groups { flex-direction: column; }
-  .sp[data-layout="accordion"] .group { flex: none !important; }
-  .sp[data-layout="accordion"] .group__links { opacity: 1; transform: none; }
-  .sp[data-layout="accordion"] .art { position: static; }
+  .sp[data-layout="accordion"] .group, .sp[data-layout="accordion"] .group:hover, .sp[data-layout="accordion"] .group.open, .sp[data-layout="accordion"] .group:focus-within { flex: none !important; }
+  .sp[data-layout="accordion"] .group__links { opacity: 1; }
+  .sp[data-layout="accordion"] .group kbd { visibility: visible !important; }
+  .sp[data-layout="accordion"] .search { max-width: none; }
+  .sp[data-layout="accordion"] .art { position: static; width: 120px; height: 120px; }
 }
 
 /* minimal */
@@ -35,7 +49,7 @@
 
 /* cards */
 .sp[data-layout="cards"] .sp__page { max-width: 1040px; min-height: 600px; padding: 36px 24px 56px; display: flex; flex-direction: column; gap: 30px; }
-.sp[data-layout="cards"] .art { position: absolute; top: 30px; right: 24px; }
+.sp[data-layout="cards"] .art { position: absolute; top: 30px; right: 24px; width: clamp(110px, calc(var(--art) * 1.2), 20cqw); height: clamp(110px, calc(var(--art) * 1.2), 20cqw); }
 .sp[data-layout="cards"] .search { width: 100%; }
 .sp[data-layout="cards"] .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
 .sp[data-layout="cards"] .group { padding: 16px 18px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
