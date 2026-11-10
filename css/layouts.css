@@ -32,20 +32,22 @@
   .sp[data-layout="accordion"] .art { position: static; width: 120px; height: 120px; }
 }
 
-/* minimal */
-.sp[data-layout="minimal"] .sp__page { max-width: 700px; min-height: 600px; padding: 36px 24px 36px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
-.sp[data-layout="minimal"] .art { order: -1; margin-bottom: -4px; }
-.sp[data-layout="minimal"] .clock { font-weight: 400; letter-spacing: -.02em; }
-.sp[data-layout="minimal"] .search { width: 100%; padding: 0 22px; }
-.sp[data-layout="minimal"] .groups { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 10px; min-height: 215px; }
-.sp[data-layout="minimal"] .group { position: relative; }
-.sp[data-layout="minimal"] .group__title { display: block; cursor: pointer; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--muted); }
+/* minimal: centred stack. Pills pick a card, its links sit in a panel right under them */
+.sp[data-layout="minimal"] { --panel: clamp(170px, 27dvh, 340px); }
+.sp[data-layout="minimal"] .sp__page { max-width: 1040px; min-height: 100dvh; margin: 0 auto; box-sizing: border-box; padding: clamp(20px, 4dvh, 44px) 28px 84px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(12px, 2.2dvh, 24px); text-align: center; }
+.sp[data-layout="minimal"] .art { order: -1; width: clamp(96px, min(calc(var(--art) * 1.4), 21dvh), 220px); height: clamp(96px, min(calc(var(--art) * 1.4), 21dvh), 220px); }
+.sp[data-layout="minimal"] .clock { font-weight: 400; letter-spacing: -.02em; font-size: clamp(3.4rem, 8dvh + 1cqw, 6rem); }
+.sp[data-layout="minimal"] .search { width: 100%; max-width: 760px; padding: 0 22px; }
+.sp[data-layout="minimal"] .groups { position: relative; width: 100%; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 10px; padding-bottom: calc(var(--panel) + 14px); }
+.sp[data-layout="minimal"] .group__title { display: block; cursor: pointer; padding: 10px 22px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--soft); transition: background .2s, color .2s, border-color .2s; }
 .sp[data-layout="minimal"] .group:hover .group__title, .sp[data-layout="minimal"] .group.open .group__title { color: var(--accentText); background: var(--accent); border-color: var(--accent); }
-.sp[data-layout="minimal"] .group__links { position: absolute; top: 100%; left: 50%; z-index: 3; transform: translate(-50%, 6px); min-width: 190px; margin-top: 6px; padding: 8px; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: min(var(--radius), 18px); box-shadow: 0 14px 40px rgba(0,0,0,.18); opacity: 0; visibility: hidden; transition: opacity .18s, transform .18s, visibility .18s; }
-.sp[data-layout="minimal"] .group__links::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
-.sp[data-layout="minimal"] .group:hover .group__links, .sp[data-layout="minimal"] .group.open .group__links { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
-.sp[data-layout="minimal"] .group__links a { padding: 8px 12px; border-radius: min(var(--radius), 12px); white-space: nowrap; }
-.sp[data-layout="minimal"] .group__links a:hover { background: var(--accent); color: var(--accentText); }
+.sp[data-layout="minimal"] .groups:has(.group:hover) .group.open:not(:hover) .group__title { color: var(--soft); background: var(--surface); border-color: var(--border); }
+.sp[data-layout="minimal"] .group__links { position: absolute; left: 0; right: 0; bottom: 0; height: var(--panel); box-sizing: border-box; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 280px)); grid-auto-rows: minmax(58px, 1fr); justify-content: center; gap: 12px; padding: 16px; overflow: auto; text-align: left; background: color-mix(in srgb, var(--surface) 55%, transparent); border: 1px solid var(--border); border-radius: min(var(--radius), 22px); opacity: 0; visibility: hidden; transition: opacity .2s, visibility .2s; }
+.sp[data-layout="minimal"] .group.open .group__links, .sp[data-layout="minimal"] .group:hover .group__links { opacity: 1; visibility: visible; }
+.sp[data-layout="minimal"] .groups:has(.group:hover) .group.open:not(:hover) .group__links { opacity: 0; visibility: hidden; }
+.sp[data-layout="minimal"] .group__links a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: min(var(--radius), 14px); white-space: nowrap; font-size: 1.05rem; }
+.sp[data-layout="minimal"] .group__links a:hover { background: var(--accent); border-color: var(--accent); color: var(--accentText); }
+@container (max-width: 600px) { .sp[data-layout="minimal"] .sp__page { padding-inline: 14px; } .sp[data-layout="minimal"] .search { padding: 0; } }
 
 /* cards */
 .sp[data-layout="cards"] .sp__page { max-width: 1040px; min-height: 600px; padding: 36px 24px 56px; display: flex; flex-direction: column; gap: 30px; }
