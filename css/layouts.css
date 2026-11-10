@@ -9,7 +9,7 @@
 .sp[data-skin=""] .group__title::before { content: ""; flex: none; width: .5em; height: .5em; border-radius: 50%; background: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .sp .group, .sp .group__links, .sp .group__links a { transition: none !important; } }
 
-/* accordion: one card open, the rest collapsed, stretched to fill the screen */
+/* ---- accordion: the original layout, stretched to fill the screen. One card open, the rest collapsed ---- */
 .sp[data-layout="accordion"] .sp__page { max-width: min(1680px, 100%); min-height: 100dvh; box-sizing: border-box; padding: clamp(20px, 4dvh, 44px) clamp(20px, 3cqw, 56px) 84px; display: flex; flex-direction: column; gap: clamp(14px, 2.4dvh, 26px); }
 .sp[data-layout="accordion"] .clock { font-size: clamp(3.4rem, 8dvh + 1cqw, 6.2rem); }
 .sp[data-layout="accordion"] .art { position: absolute; top: clamp(20px, 4dvh, 44px); right: clamp(20px, 3cqw, 56px); width: clamp(100px, min(calc(var(--art) * 1.5), 19dvh), 230px); height: clamp(100px, min(calc(var(--art) * 1.5), 19dvh), 230px); }
