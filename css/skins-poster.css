@@ -29,3 +29,16 @@
 .sp[data-skin="poster"] .sp-fab { color: var(--bg); border: 0; font-weight: 900; box-shadow: 0 5px 0 rgba(0,0,0,.3); }
 .sp[data-skin="poster"] .sp-fab:hover { background: var(--accent); color: var(--accentText); }
 .sp[data-skin="poster"] .art { box-sizing: border-box; padding: 7px; background: var(--surface); border-radius: 6px; box-shadow: 0 6px 0 rgba(0,0,0,.3); }
+
+
+/* ---- Customize page on the poster skin: dark ink on cream panels ---- */
+.sp[data-skin="poster"] .sp-panel .ptab > section, .sp[data-skin="poster"] .sp-panel details { --c-ink: var(--bg); --c-mute: color-mix(in srgb, var(--bg) 78%, var(--surface)); --c-line: color-mix(in srgb, var(--bg) 40%, var(--surface)); }
+.sp[data-skin="poster"] .sp-panel .ptab > section, .sp[data-skin="poster"] .sp-panel details, .sp[data-skin="poster"] .sp-panel summary { color: var(--bg); }
+.sp[data-skin="poster"] .sp-panel .ptab > section { border: 0; box-shadow: 0 5px 0 rgba(0,0,0,.3); }
+.sp[data-skin="poster"] .sp-back { background: var(--surface); color: var(--bg); border: 0; font-weight: 900; box-shadow: 0 4px 0 rgba(0,0,0,.3); }
+.sp[data-skin="poster"] .sp-back:hover { background: var(--accent); color: var(--accentText); }
+.sp[data-skin="poster"] .sp-tabs button { color: var(--muted); font-weight: 900; }
+.sp[data-skin="poster"] .sp-tabs button:hover { color: var(--text); }
+.sp[data-skin="poster"] .sp-tabs button[aria-selected="true"] { background: var(--accent); color: var(--accentText); }
+.sp[data-skin="poster"] .sp-panel input[type="text"], .sp[data-skin="poster"] .sp-panel select, .sp[data-skin="poster"] .sp-panel textarea, .sp[data-skin="poster"] .sp-panel code { color: var(--text); }
+.sp[data-skin="poster"] .sp-panel .src-note.err, .sp[data-skin="poster"] .sp-panel .links-status.warn { color: #9b1c31; }
