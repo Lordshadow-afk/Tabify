@@ -37,3 +37,5 @@
 .sp[data-layout="cards"] .group__links a:hover { background: var(--accent); color: var(--accentText); padding-left: 16px; }
 @container (max-width: 760px) { .sp[data-layout="cards"] .art { position: static; width: 110px; height: 110px; } .sp[data-layout="cards"] .search { order: 0; margin-top: 0; } .sp[data-layout="cards"] .groups { margin-top: 0; } .sp[data-layout="cards"] .groups { grid-template-columns: 1fr; grid-auto-rows: auto; } }
 @container (min-width: 761px) { .sp[data-layout="cards"][data-skin=""] .groups { margin-top: clamp(40px, 14dvh, 140px); } }
+/* search bar sits at the bottom in cards layout: open the engine menu upwards so it is not cut off */
+@container (min-width: 761px) { .sp[data-layout="cards"] .engine-menu { top: auto; bottom: calc(100% + 8px); } }
